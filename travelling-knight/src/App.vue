@@ -56,7 +56,7 @@
         name: 'App',
         mounted()
         {
-            const frogX = 2;
+            const frogX = 3;
             const frogY = 5;
 
             this.LoadBoard(frogX, frogY);
@@ -120,12 +120,47 @@
                     const frogX = txtStartPlace.value[0].charCodeAt(0) - 64;
                     const frogY = txtStartPlace.value[1];
 
-                    this.LoadBoard(frogX, frogY);
+                    if((frogX >= 1 && frogX <= 8) && (frogY >= 1 && frogY <= 8))
+                    {
+                        this.LoadBoard(frogX, frogY);
+                    }
+                    else
+                    {
+                        alert("Start place invalid ...");
+                        txtStartPlace.focus();
+                    }
+                }
+                else
+                {
+                    alert("Start place invalid ...");
+                    txtStartPlace.focus();
                 }
             },
             StartTravel()
             {
-                
+                const txtStartPlace = document.querySelector("#txtStartPlace");
+                if(txtStartPlace.value != "" && txtStartPlace.value.length == 2)
+                {
+                    const txtEndPlace = document.querySelector("#txtEndPlace");
+                    if(txtEndPlace.value != "" && txtEndPlace.value.length == 2)
+                    {
+                        console.log("Lets go");
+                    }
+                    else
+                    {
+                        alert("End place invalid ...");
+                        txtEndPlace.focus();
+                    }
+                }
+                else
+                {
+                    alert("Start place invalid ...");
+                    txtStartPlace.focus();
+                }
+            },
+            Travel()
+            {
+
             }
         }
     }
@@ -216,6 +251,7 @@
         width: 50%;
         position: absolute;
         z-index: 2;
+        animation: lilyPadMoves 4s ease-in-out 0.2s infinite;
     }
 
     .chessBoardPlatesImage
