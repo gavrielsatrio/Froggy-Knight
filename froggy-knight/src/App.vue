@@ -13,7 +13,7 @@
                                     Start Place :
                                 </div>
                                 <div class="col-lg-12">
-                                    <input type="text" id="txtStartPlace" class="form-control" maxlength="2" value="A1" autocomplete="false">
+                                    <input type="text" id="txtStartPlace" class="form-control" maxlength="2" value="A1" autocomplete="off">
                                 </div>
                                 <div class="col-lg-12 d-flex justify-content-end mt-3">
                                     <button id="btnPlaceFrog" class="btn btn-success" @click="PlaceFrog()">Place Frog 🐸</button>
@@ -26,7 +26,7 @@
                                     End Place :
                                 </div>
                                 <div class="col-lg-12">
-                                    <input type="text" id="txtEndPlace" class="form-control" maxlength="2" value="B3" autocomplete="false">
+                                    <input type="text" id="txtEndPlace" class="form-control" maxlength="2" value="B3" autocomplete="off">
                                 </div>
                                 <div class="col-lg-12 d-flex justify-content-end mt-3">
                                     <button id="btnPlaceFrog" class="btn btn-primary" @click="StartTravel()">Start Travel ✈</button>
@@ -98,6 +98,7 @@
                         else
                         {
                             const chessBoardPlateImage = document.createElement("img");
+                            chessBoardPlateImage.id = "chessBoardPlateImage-" + String.fromCharCode(j + 64) + (8 - i);
                             chessBoardPlateImage.src = chessBoardPlateImageAsset;
                             chessBoardPlateImage.className = "chessBoardPlatesImage";
 
@@ -122,12 +123,12 @@
             {
                 const frog = document.querySelector("#frogImage");
                 frog.style.transform = "translate(" + (x - 1) * 69 + "px, " + (y - 1) * -69 + "px)";
-                frog.style.animation = "frogJump 1s ease-in-out";
+                frog.style.animation = "frogJump 1.5s ease-in-out";
 
                 setTimeout(() =>
                 {
                     frog.style.animation = "";
-                }, 1000);
+                }, 1400);
             },
             PlaceFrog()
             {
@@ -210,7 +211,7 @@
                                     setTimeout(() => 
                                     {
                                         this.LoadFrogPosition(move.afterX, move.afterY);
-                                    }, (index + 1) * 1000);
+                                    }, (index + 1) * 1500);
                                 });
                             }
                             else
@@ -283,6 +284,7 @@
                                     beforeY : y,
                                     afterX : x + 1,
                                     afterY : y + 2,
+                                    moveName : "upright",
                                     count : count + 1
                                 });
                             }
@@ -300,6 +302,7 @@
                                     beforeY : y,
                                     afterX : x + 2,
                                     afterY : y + 1,
+                                    moveName : "rightup",
                                     count : count + 1
                                 });
                             }
@@ -317,6 +320,7 @@
                                     beforeY : y,
                                     afterX : x - 1,
                                     afterY : y + 2,
+                                    moveName : "upleft",
                                     count : count + 1
                                 });
                             }
@@ -334,6 +338,7 @@
                                     beforeY : y,
                                     afterX : x + 2,
                                     afterY : y - 1,
+                                    moveName : "rightdown",
                                     count : count + 1
                                 });
                             }
@@ -351,6 +356,7 @@
                                     beforeY : y,
                                     afterX : x - 1,
                                     afterY : y - 2,
+                                    moveName : "downleft",
                                     count : count + 1
                                 });
                             }
@@ -370,6 +376,7 @@
                                     beforeY : y,
                                     afterX : x + 1,
                                     afterY : y - 2,
+                                    moveName : "downright",
                                     count : count + 1
                                 });
                             }
@@ -387,6 +394,7 @@
                                     beforeY : y,
                                     afterX : x + 2,
                                     afterY : y - 1,
+                                    moveName : "rightdown",
                                     count : count + 1
                                 });
                             }
@@ -404,6 +412,7 @@
                                     beforeY : y,
                                     afterX : x + 2,
                                     afterY : y + 1,
+                                    moveName : "rightup",
                                     count : count + 1
                                 });
                             }
@@ -421,6 +430,7 @@
                                     beforeY : y,
                                     afterX : x - 1,
                                     afterY : y - 2,
+                                    moveName : "downleft",
                                     count : count + 1
                                 });
                             }
@@ -438,6 +448,7 @@
                                     beforeY : y,
                                     afterX : x - 1,
                                     afterY : y + 2,
+                                    moveName : "upleft",
                                     count : count + 1
                                 });
                             }
@@ -457,6 +468,7 @@
                                     beforeY : y,
                                     afterX : x + 1,
                                     afterY : y - 2,
+                                    moveName : "downright",
                                     count : count + 1
                                 });
                             }
@@ -474,6 +486,7 @@
                                     beforeY : y,
                                     afterX : x + 2,
                                     afterY : y - 1,
+                                    moveName : "rightdown",
                                     count : count + 1
                                 });
                             }
@@ -491,6 +504,7 @@
                                     beforeY : y,
                                     afterX : x + 1,
                                     afterY : y + 2,
+                                    moveName : "upright",
                                     count : count + 1
                                 });
                             }
@@ -508,6 +522,7 @@
                                     beforeY : y,
                                     afterX : x + 2,
                                     afterY : y + 1,
+                                    moveName : "rightup",
                                     count : count + 1
                                 });
                             }
@@ -525,6 +540,7 @@
                                     beforeY : y,
                                     afterX : x - 1,
                                     afterY : y + 2,
+                                    moveName : "upleft",
                                     count : count + 1
                                 });
                             }
@@ -547,6 +563,7 @@
                                     beforeY : y,
                                     afterX : x - 2,
                                     afterY : y + 1,
+                                    moveName : "leftup",
                                     count : count + 1
                                 });
                             }
@@ -564,6 +581,7 @@
                                     beforeY : y,
                                     afterX : x - 1,
                                     afterY : y + 2,
+                                    moveName : "upleft",
                                     count : count + 1
                                 });
                             }
@@ -581,6 +599,7 @@
                                     beforeY : y,
                                     afterX : x + 1,
                                     afterY : y + 2,
+                                    moveName : "upright",
                                     count : count + 1
                                 });
                             }
@@ -598,6 +617,7 @@
                                     beforeY : y,
                                     afterX : x - 2,
                                     afterY : y - 1,
+                                    moveName : "leftdown",
                                     count : count + 1
                                 });
                             }
@@ -615,6 +635,7 @@
                                     beforeY : y,
                                     afterX : x + 1,
                                     afterY : y - 2,
+                                    moveName : "downright",
                                     count : count + 1
                                 });
                             }
@@ -634,6 +655,7 @@
                                     beforeY : y,
                                     afterX : x - 2,
                                     afterY : y - 1,
+                                    moveName : "leftdown",
                                     count : count + 1
                                 });
                             }
@@ -651,6 +673,7 @@
                                     beforeY : y,
                                     afterX : x - 1,
                                     afterY : y - 2,
+                                    moveName : "downleft",
                                     count : count + 1
                                 });
                             }
@@ -668,6 +691,7 @@
                                     beforeY : y,
                                     afterX : x + 1,
                                     afterY : y + 2,
+                                    moveName : "upright",
                                     count : count + 1
                                 });
                             }
@@ -685,6 +709,7 @@
                                     beforeY : y,
                                     afterX : x - 2,
                                     afterY : y + 1,
+                                    moveName : "leftup",
                                     count : count + 1
                                 });
                             }
@@ -702,6 +727,7 @@
                                     beforeY : y,
                                     afterX : x + 1,
                                     afterY : y - 2,
+                                    moveName : "downright",
                                     count : count + 1
                                 });
                             }
@@ -721,6 +747,7 @@
                                     beforeY : y,
                                     afterX : x - 2,
                                     afterY : y - 1,
+                                    moveName : "leftdown",
                                     count : count + 1
                                 });
                             }
@@ -738,6 +765,7 @@
                                     beforeY : y,
                                     afterX : x - 1,
                                     afterY : y - 2,
+                                    moveName : "downleft",
                                     count : count + 1
                                 });
                             }
@@ -755,6 +783,7 @@
                                     beforeY : y,
                                     afterX : x - 2,
                                     afterY : y + 1,
+                                    moveName : "leftup",
                                     count : count + 1
                                 });
                             }
@@ -772,6 +801,7 @@
                                     beforeY : y,
                                     afterX : x - 1,
                                     afterY : y + 2,
+                                    moveName : "upleft",
                                     count : count + 1
                                 });
                             }
@@ -789,6 +819,7 @@
                                     beforeY : y,
                                     afterX : x + 1,
                                     afterY : y + 2,
+                                    moveName : "upright",
                                     count : count + 1
                                 });
                             }
@@ -806,6 +837,7 @@
                                     beforeY : y,
                                     afterX : x + 1,
                                     afterY : y - 2,
+                                    moveName : "downright",
                                     count : count + 1
                                 });
                             }
@@ -828,6 +860,7 @@
                                     beforeY : y,
                                     afterX : x - 2,
                                     afterY : y + 1,
+                                    moveName : "leftup",
                                     count : count + 1
                                 });
                             }
@@ -845,6 +878,7 @@
                                     beforeY : y,
                                     afterX : x - 1,
                                     afterY : y + 2,
+                                    moveName : "upleft",
                                     count : count + 1
                                 });
                             }
@@ -862,6 +896,7 @@
                                     beforeY : y,
                                     afterX : x + 1,
                                     afterY : y + 2,
+                                    moveName : "upright",
                                     count : count + 1
                                 });
                             }
@@ -879,6 +914,7 @@
                                     beforeY : y,
                                     afterX : x + 2,
                                     afterY : y + 1,
+                                    moveName : "rightup",
                                     count : count + 1
                                 });
                             }
@@ -896,6 +932,7 @@
                                     beforeY : y,
                                     afterX : x + 2,
                                     afterY : y - 1,
+                                    moveName : "rightdown",
                                     count : count + 1
                                 });
                             }
@@ -915,6 +952,7 @@
                                     beforeY : y,
                                     afterX : x - 2,
                                     afterY : y - 1,
+                                    moveName : "leftdown",
                                     count : count + 1
                                 });
                             }
@@ -932,6 +970,7 @@
                                     beforeY : y,
                                     afterX : x - 1,
                                     afterY : y - 2,
+                                    moveName : "downleft",
                                     count : count + 1
                                 });
                             }
@@ -949,6 +988,7 @@
                                     beforeY : y,
                                     afterX : x + 1,
                                     afterY : y - 2,
+                                    moveName : "downright",
                                     count : count + 1
                                 });
                             }
@@ -966,6 +1006,7 @@
                                     beforeY : y,
                                     afterX : x + 2,
                                     afterY : y - 1,
+                                    moveName : "rightdown",
                                     count : count + 1
                                 });
                             }
@@ -983,6 +1024,7 @@
                                     beforeY : y,
                                     afterX : x + 2,
                                     afterY : y + 1,
+                                    moveName : "rightup",
                                     count : count + 1
                                 });
                             }
@@ -1103,7 +1145,7 @@
         width: 50%;
         position: absolute;
         z-index: 2;
-        transition: all 1s ease-in-out;
+        transition: all 1.5s ease-in-out;
     }
 
     .chessBoardPlatesImage
