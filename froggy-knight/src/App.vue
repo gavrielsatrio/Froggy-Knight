@@ -3,21 +3,17 @@
         <div class="container-fluid vh-100">
             <div class="row" id="appContainer">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-3">
                         <div id="header">
                             <h1>Froggy Knight</h1>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-3">
                         <div class="controllingPanel">
                             <div class="row">
                                 <div class="col-lg-12">
                                     Start Place :
                                 </div>
                                 <div class="col-lg-12">
-                                    <input type="text" id="txtStartPlace" class="form-control" maxlength="2" value="A1">
+                                    <input type="text" id="txtStartPlace" class="form-control" maxlength="2" value="A1" autocomplete="false">
                                 </div>
                                 <div class="col-lg-12 d-flex justify-content-end mt-3">
                                     <button id="btnPlaceFrog" class="btn btn-success" @click="PlaceFrog()">Place Frog 🐸</button>
@@ -30,7 +26,7 @@
                                     End Place :
                                 </div>
                                 <div class="col-lg-12">
-                                    <input type="text" id="txtEndPlace" class="form-control" maxlength="2" value="B3">
+                                    <input type="text" id="txtEndPlace" class="form-control" maxlength="2" value="B3" autocomplete="false">
                                 </div>
                                 <div class="col-lg-12 d-flex justify-content-end mt-3">
                                     <button id="btnPlaceFrog" class="btn btn-primary" @click="StartTravel()">Start Travel ✈</button>
@@ -42,7 +38,6 @@
                         <div id="mainContent" class="m-5 m-lg-0"></div>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -62,7 +57,8 @@
                 frogXEnd : 2,
                 frogYEnd : 3,
                 minimumMovesCount : 100,
-                isAlreadyArrive : false
+                isAlreadyArrive : false,
+                visited : []
             }
         },
         mounted()
@@ -162,6 +158,10 @@
             },
             StartTravel()
             {
+                this.isAlreadyArrive = false;
+                this.minimumMovesCount = 100;
+                this.visited = [];
+
                 const txtStartPlace = document.querySelector("#txtStartPlace");
                 if(txtStartPlace.value != "" && txtStartPlace.value.length == 2)
                 {
@@ -185,7 +185,6 @@
 
                                 this.LoadFrogPosition(this.frogXStart, this.frogYStart);
                                 this.Travel(this.frogXStart, this.frogYStart, 0);
-
                                 console.log(this.minimumMovesCount);
                             }
                             else
@@ -791,7 +790,7 @@
         width: 50%;
         position: absolute;
         z-index: 2;
-        transition: all 1.5s ease-in-out;
+        transition: all 1s ease-in-out;
     }
 
     .chessBoardPlatesImage
