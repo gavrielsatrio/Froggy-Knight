@@ -98,7 +98,7 @@
                         else
                         {
                             const chessBoardPlateImage = document.createElement("img");
-                            chessBoardPlateImage.id = "chessBoardPlateImage-" + String.fromCharCode(j + 64) + (8 - i);
+                            chessBoardPlateImage.id = "chessBoardPlateImage-" + j + "" + (8 - i);
                             chessBoardPlateImage.src = chessBoardPlateImageAsset;
                             chessBoardPlateImage.className = "chessBoardPlatesImage";
 
@@ -184,6 +184,12 @@
                                 this.frogXEnd = frogXEndInput;
                                 this.frogYEnd = frogYEndInput;
 
+                                const chessBoardPlateImages = document.querySelectorAll(".chessBoardPlatesImage");
+                                chessBoardPlateImages.forEach((item) =>
+                                {
+                                    item.style.filter = "brightness(70%)";
+                                });
+
                                 this.LoadFrogPosition(this.frogXStart, this.frogYStart);
                                 this.Travel(this.frogXStart, this.frogYStart, 0);
 
@@ -208,6 +214,12 @@
 
                                 movesNeeded.forEach((move, index) =>
                                 {
+                                    const fromPlate = document.querySelector("#chessBoardPlateImage-" + move.beforeX + "" + move.beforeY);
+                                    fromPlate.style.filter = "brightness(100%)";
+
+                                    const toPlate = document.querySelector("#chessBoardPlateImage-" + move.afterX + "" + move.afterY);
+                                    toPlate.style.filter = "brightness(100%)";
+
                                     setTimeout(() => 
                                     {
                                         this.LoadFrogPosition(move.afterX, move.afterY);
@@ -1154,6 +1166,8 @@
         z-index: 1;
         position: absolute;
         animation: lilyPadMoves 4s ease-in-out infinite;
+        filter : brightness(100%);
+        transition: all 1s ease-in-out;
     }
 
 </style>
