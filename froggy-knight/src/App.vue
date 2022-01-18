@@ -58,7 +58,7 @@
                 frogYEnd : 3,
                 minimumMovesCount : 100,
                 isAlreadyArrive : false,
-                visited : []
+                allMoves : []
             }
         },
         mounted()
@@ -160,7 +160,7 @@
             {
                 this.isAlreadyArrive = false;
                 this.minimumMovesCount = 100;
-                this.visited = [];
+                this.allMoves = [];
 
                 const txtStartPlace = document.querySelector("#txtStartPlace");
                 if(txtStartPlace.value != "" && txtStartPlace.value.length == 2)
@@ -185,7 +185,33 @@
 
                                 this.LoadFrogPosition(this.frogXStart, this.frogYStart);
                                 this.Travel(this.frogXStart, this.frogYStart, 0);
-                                console.log(this.minimumMovesCount);
+
+                                const movesNeeded = [];
+                                const lastMove = this.allMoves[this.allMoves.findIndex(a => a.afterX == this.frogXEnd && a.afterY == this.frogYEnd && a.count == this.minimumMovesCount)];
+
+                                movesNeeded.unshift(lastMove);
+                                
+                                let beforeMoveX = lastMove.beforeX;
+                                let beforeMoveY = lastMove.beforeY;
+                                let moveCount = lastMove.count;
+                                while(moveCount > 1)
+                                {
+                                    moveCount--;
+
+                                    const beforeMove = this.allMoves[this.allMoves.findIndex(a => a.afterX == beforeMoveX && a.afterY == beforeMoveY && a.count == moveCount)];
+                                    beforeMoveX = beforeMove.beforeX;
+                                    beforeMoveY = beforeMove.beforeY;
+
+                                    movesNeeded.unshift(beforeMove);
+                                }
+
+                                movesNeeded.forEach((move, index) =>
+                                {
+                                    setTimeout(() => 
+                                    {
+                                        this.LoadFrogPosition(move.afterX, move.afterY);
+                                    }, (index + 1) * 1000);
+                                });
                             }
                             else
                             {
@@ -252,6 +278,13 @@
                             if(x + 1 <= 8)
                             {
                                 this.Travel(x + 1, y + 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 1,
+                                    afterY : y + 2,
+                                    count : count + 1
+                                });
                             }
                         }
 
@@ -262,6 +295,13 @@
                             if(y + 1 <= 8)
                             {
                                 this.Travel(x + 2, y + 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 2,
+                                    afterY : y + 1,
+                                    count : count + 1
+                                });
                             }
                         }
 
@@ -272,6 +312,13 @@
                             if(x - 1 >= 1)
                             {
                                 this.Travel(x - 1, y + 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 1,
+                                    afterY : y + 2,
+                                    count : count + 1
+                                });
                             }
                         }
 
@@ -282,6 +329,13 @@
                             if(y - 1 >= 1)
                             {
                                 this.Travel(x + 2, y - 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 2,
+                                    afterY : y - 1,
+                                    count : count + 1
+                                });
                             }
                         }
 
@@ -292,6 +346,13 @@
                             if(x - 1 >= 1)
                             {
                                 this.Travel(x - 1, y - 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 1,
+                                    afterY : y - 2,
+                                    count : count + 1
+                                });
                             }
                         }
                     }
@@ -304,6 +365,13 @@
                             if(x + 1 <= 8)
                             {
                                 this.Travel(x + 1, y - 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 1,
+                                    afterY : y - 2,
+                                    count : count + 1
+                                });
                             }
                         }
 
@@ -314,6 +382,13 @@
                             if(y - 1 >= 1)
                             {
                                 this.Travel(x + 2, y - 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 2,
+                                    afterY : y - 1,
+                                    count : count + 1
+                                });
                             }
                         }
 
@@ -324,6 +399,13 @@
                             if(y + 1 <= 8)
                             {
                                 this.Travel(x + 2, y + 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 2,
+                                    afterY : y + 1,
+                                    count : count + 1
+                                });
                             }
                         }
 
@@ -334,6 +416,13 @@
                             if(x - 1 >= 1)
                             {
                                 this.Travel(x - 1, y - 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 1,
+                                    afterY : y - 2,
+                                    count : count + 1
+                                });
                             }
                         }
 
@@ -344,6 +433,13 @@
                             if(x - 1 >= 1)
                             {
                                 this.Travel(x - 1, y + 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 1,
+                                    afterY : y + 2,
+                                    count : count + 1
+                                });
                             }
                         }
                     }
@@ -356,6 +452,13 @@
                             if(x + 1 <= 8)
                             {
                                 this.Travel(x + 1, y - 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 1,
+                                    afterY : y - 2,
+                                    count : count + 1
+                                });
                             }
                         }
 
@@ -366,6 +469,13 @@
                             if(y - 1 >= 1)
                             {
                                 this.Travel(x + 2, y - 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 2,
+                                    afterY : y - 1,
+                                    count : count + 1
+                                });
                             }
                         }
 
@@ -376,6 +486,13 @@
                             if(x + 1 <= 8)
                             {
                                 this.Travel(x + 1, y + 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 1,
+                                    afterY : y + 2,
+                                    count : count + 1
+                                });
                             }
                         }
 
@@ -386,6 +503,13 @@
                             if(y + 1 <= 8)
                             {
                                 this.Travel(x + 2, y + 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 2,
+                                    afterY : y + 1,
+                                    count : count + 1
+                                });
                             }
                         }
 
@@ -396,6 +520,13 @@
                             if(x - 1 >= 1)
                             {
                                 this.Travel(x - 1, y + 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 1,
+                                    afterY : y + 2,
+                                    count : count + 1
+                                });
                             }
                         }
                     }
@@ -411,6 +542,13 @@
                             if(y + 1 <= 8)
                             {
                                 this.Travel(x - 2, y + 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 2,
+                                    afterY : y + 1,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -421,6 +559,13 @@
                             if(x - 1 >= 1)
                             {
                                 this.Travel(x - 1, y + 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 1,
+                                    afterY : y + 2,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -431,6 +576,13 @@
                             if(x + 1 <= 8)
                             {
                                 this.Travel(x + 1, y + 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 1,
+                                    afterY : y + 2,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -441,6 +593,13 @@
                             if(y - 1 >= 1)
                             {
                                 this.Travel(x - 2, y - 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 2,
+                                    afterY : y - 1,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -451,6 +610,13 @@
                             if(x + 1 <= 8)
                             {
                                 this.Travel(x + 1, y - 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 1,
+                                    afterY : y - 2,
+                                    count : count + 1
+                                });
                             }
                         }
                     }
@@ -463,6 +629,13 @@
                             if(y - 1 >= 1)
                             {
                                 this.Travel(x - 2, y - 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 2,
+                                    afterY : y - 1,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -473,6 +646,13 @@
                             if(x - 1 >= 1)
                             {
                                 this.Travel(x - 1, y - 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 1,
+                                    afterY : y - 2,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -483,6 +663,13 @@
                             if(x + 1 <= 8)
                             {
                                 this.Travel(x + 1, y + 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 1,
+                                    afterY : y + 2,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -493,6 +680,13 @@
                             if(y + 1 <= 8)
                             {
                                 this.Travel(x - 2, y + 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 2,
+                                    afterY : y + 1,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -503,6 +697,13 @@
                             if(x + 1 <= 8)
                             {
                                 this.Travel(x + 1, y - 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 1,
+                                    afterY : y - 2,
+                                    count : count + 1
+                                });
                             }
                         }
                     }
@@ -515,6 +716,13 @@
                             if(y - 1 >= 1)
                             {
                                 this.Travel(x - 2, y - 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 2,
+                                    afterY : y - 1,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -525,6 +733,13 @@
                             if(x - 1 >= 1)
                             {
                                 this.Travel(x - 1, y - 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 1,
+                                    afterY : y - 2,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -535,6 +750,13 @@
                             if(y + 1 <= 8)
                             {
                                 this.Travel(x - 2, y + 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 2,
+                                    afterY : y + 1,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -545,6 +767,13 @@
                             if(x - 1 >= 1)
                             {
                                 this.Travel(x - 1, y + 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 1,
+                                    afterY : y + 2,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -555,6 +784,13 @@
                             if(x + 1 <= 8)
                             {
                                 this.Travel(x + 1, y + 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 1,
+                                    afterY : y + 2,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -565,6 +801,13 @@
                             if(x + 1 <= 8)
                             {
                                 this.Travel(x + 1, y - 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 1,
+                                    afterY : y - 2,
+                                    count : count + 1
+                                });
                             }
                         }
                     }
@@ -580,6 +823,13 @@
                             if(y + 1 <= 8)
                             {
                                 this.Travel(x - 2, y + 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 2,
+                                    afterY : y + 1,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -590,6 +840,13 @@
                             if(x - 1 >= 1)
                             {
                                 this.Travel(x - 1, y + 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 1,
+                                    afterY : y + 2,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -600,6 +857,13 @@
                             if(x + 1 <= 8)
                             {
                                 this.Travel(x + 1, y + 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 1,
+                                    afterY : y + 2,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -610,6 +874,13 @@
                             if(y + 1 <= 8)
                             {
                                 this.Travel(x + 2, y + 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 2,
+                                    afterY : y + 1,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -620,6 +891,13 @@
                             if(y - 1 >= 1)
                             {
                                 this.Travel(x + 2, y - 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 2,
+                                    afterY : y - 1,
+                                    count : count + 1
+                                });
                             }
                         }
                     }
@@ -632,6 +910,13 @@
                             if(y - 1 >= 1)
                             {
                                 this.Travel(x - 2, y - 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 2,
+                                    afterY : y - 1,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -642,6 +927,13 @@
                             if(x - 1 >= 1)
                             {
                                 this.Travel(x - 1, y - 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x - 1,
+                                    afterY : y - 2,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -652,6 +944,13 @@
                             if(x + 1 <= 8)
                             {
                                 this.Travel(x + 1, y - 2, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 1,
+                                    afterY : y - 2,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -662,6 +961,13 @@
                             if(y - 1 >= 1)
                             {
                                 this.Travel(x + 2, y - 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 2,
+                                    afterY : y - 1,
+                                    count : count + 1
+                                });
                             }
                         }
     
@@ -672,6 +978,13 @@
                             if(y + 1 <= 8)
                             {
                                 this.Travel(x + 2, y + 1, count + 1);
+                                this.allMoves.push({
+                                    beforeX : x,
+                                    beforeY : y,
+                                    afterX : x + 2,
+                                    afterY : y + 1,
+                                    count : count + 1
+                                });
                             }
                         }
                     }
