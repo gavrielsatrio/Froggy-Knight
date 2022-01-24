@@ -5,25 +5,16 @@
                 <div class="col-lg-12 h-100">
                     <div id="mainPage" class="row h-100 pages">
                         <div class="col-lg-3">
-                            <div id="mainHeader">
-                                <h1>Froggy Knight</h1>
-                            </div>
                             <div class="mainControllingPanel">
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <h2 id="mainControllingPanelHeader">Set Your Frog</h2>
+                                    <div class="col-lg-12 mt-3">
                                         Start Place :
                                     </div>
                                     <div class="col-lg-12">
                                         <input type="text" id="txtStartPlace" class="form-control" maxlength="2" value="A1" autocomplete="off">
                                     </div>
-                                    <div class="col-lg-12 d-flex justify-content-end mt-3">
-                                        <button id="btnPlaceFrog" class="btn btn-success" @click="PlaceFrog()">Place Frog 🐸</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mainControllingPanel">
-                                <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 mt-3">
                                         End Place :
                                     </div>
                                     <div class="col-lg-12">
@@ -51,6 +42,7 @@
                                 <button class="btn" id="btnJumpToMain" @click="JumpToMainPage()">Let's Jump Into It</button>
                             </div>
                         </div>
+                        <img src="./assets/images/frog.svg" id="introductionLoadingFrogImage">
                     </div>
                 </div>
             </div>
@@ -59,7 +51,7 @@
 </template>
 <script>
 
-    import chessBoardPlateImageAsset from './assets/images/lilypad2.png';
+    import chessBoardPlateImageAsset from './assets/images/lilypad2.svg';
     import frogAsset from './assets/images/frog.png';
 
     export default {
@@ -79,6 +71,7 @@
         mounted()
         {
             this.ShowIntroductionPage();
+            // this.JumpToMainPage();
             this.LoadBoard();
         },
         methods: 
@@ -102,18 +95,37 @@
             },
             JumpToMainPage()
             {
-                const introductionPage = document.querySelector("#introductionPage");
-                introductionPage.style.transform = "translate(0px, 0%)";
-                introductionPage.style.opacity = "0";
+                const frogLoading = document.querySelector("#introductionLoadingFrogImage");
+                frogLoading.style.transform = "translate(-50%, 0%)";
+                frogLoading.style.animation = "frogLoadingJump 1.5s ease-in-out";
 
-                const mainPage = document.querySelector("#mainPage");
-                mainPage.style.transform = "translate(0px, 0%)";
-                mainPage.style.opacity = "1";
-
-                setTimeout(() => 
+                setTimeout(() =>
                 {
-                    this.LoadFrogPosition(this.frogXStart, this.frogYStart);
-                }, 1500);
+                    frogLoading.style.animation = "";
+
+                    setTimeout(() => 
+                    {
+                        frogLoading.style.transform = "translate(-50%, -100vh)";
+                        frogLoading.style.animation = "frogLoadingJump 1.5s ease-in-out 0s 1";
+
+                        setTimeout(() => 
+                        {
+                            frogLoading.style.opacity = "0";
+                            this.LoadFrogPosition(this.frogXStart, this.frogYStart);
+                        }, 350);
+
+                        setTimeout(() => 
+                        {
+                            const introductionPage = document.querySelector("#introductionPage");
+                            introductionPage.style.transform = "translate(0%, 0%)";
+                            introductionPage.style.opacity = "0";
+
+                            const mainPage = document.querySelector("#mainPage");
+                            mainPage.style.transform = "translate(0px, 0%)";
+                            mainPage.style.opacity = "1";
+                        }, 600);
+                    }, 300);
+                }, 1400);
             },
             LoadBoard()
             {
@@ -175,33 +187,6 @@
                 {
                     frog.style.animation = "";
                 }, 1400);
-            },
-            PlaceFrog()
-            {
-                const txtStartPlace = document.querySelector("#txtStartPlace");
-                if(txtStartPlace.value != "" && txtStartPlace.value.length == 2)
-                {
-                    const frogXStartInput = txtStartPlace.value[0].charCodeAt(0) - 64;
-                    const frogYStartInput = parseInt(txtStartPlace.value[1]);
-
-                    if((frogXStartInput >= 1 && frogXStartInput <= 8) && (frogYStartInput >= 1 && frogYStartInput <= 8))
-                    {
-                        this.frogXStart = frogXStartInput;
-                        this.frogYStart = frogYStartInput;
-
-                        this.LoadFrogPosition(this.frogXStart, this.frogYStart);
-                    }
-                    else
-                    {
-                        alert("Start place invalid ...");
-                        txtStartPlace.focus();
-                    }
-                }
-                else
-                {
-                    alert("Start place invalid ...");
-                    txtStartPlace.focus();
-                }
             },
             StartTravel()
             {
@@ -1161,6 +1146,26 @@
         }
     }
 
+    @keyframes frogLoadingJump {
+        0%
+        {
+            width: 80px;
+            height: 80px;
+        }
+
+        50%
+        {
+            width: 120px;
+            height: 120px;
+        }
+
+        100%
+        {
+            width: 80px;
+            height: 80px;
+        }
+    }
+
     /*       */
     /* Fonts */
     /*       */
@@ -1173,6 +1178,11 @@
     @font-face {
         font-family: linotte-regular;
         src: url("./assets/fonts/linotte_regular.otf");
+    }
+
+    @font-face {
+        font-family: linotte-bold;
+        src: url("./assets/fonts/linotte_bold.otf");
     }
 
 
@@ -1210,14 +1220,12 @@
         transform: translate(0, -100%);
         opacity: 0;
         overflow: hidden;
+        font-family: linotte-light;
     }
 
-    #mainHeader
+    #mainControllingPanelHeader
     {
-        padding-top: 30px;
-        padding-left: 30px;
-        color: white;
-        text-shadow: rgba(0, 0, 0, 0.35) 5px 5px 5px;
+        font-family: linotte-bold;
     }
 
     .mainControllingPanel
@@ -1226,6 +1234,7 @@
         margin: 30px 0 0 30px;
         border-radius: 5px;
         padding: 20px;
+        box-shadow: -5px 5px 5px rgba(20, 20, 20, 0.15);
     }
 
     #mainChessBoard
@@ -1242,8 +1251,9 @@
         user-select: none;
         position: relative;
         color: white;
-        font-weight: bold;
+        font-family: linotte-bold;
         font-size: 18px;
+        text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
     }
 
     #frogImage
@@ -1308,6 +1318,20 @@
         transition: all 1.25s ease-in-out;
     }
 
+    #introductionLoadingFrogImage
+    {
+        position: absolute;
+        z-index: 1;
+        width: 80px;
+        height: 80px;
+        bottom: 50px;
+        left: 50%;
+        transform: translate(-50%, 160px);
+        transition: all 1s ease-in-out;
+        /* filter: brightness(110%); */
+        opacity: 1;
+    }
+
     #btnJumpToMain
     {
         margin-top: 16px;
@@ -1317,6 +1341,7 @@
         font-size: 18px;
         transition: all 0.15s ease-in-out;
         opacity: 0;
+        font-family: linotte-regular;
     }
 
     #btnJumpToMain:hover
@@ -1328,6 +1353,7 @@
     {
         outline: none;
         box-shadow: none;
+        background-color: #00602B;
     }
 
 </style>
