@@ -1,41 +1,56 @@
 <template>
     <div id="app">
-        <div class="container-fluid vh-100">
-            <div class="row" id="appContainer">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div id="header">
-                            <h1>Froggy Knight</h1>
-                        </div>
-                        <div class="controllingPanel">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    Start Place :
+        <div class="container-fluid">
+            <div class="row vh-100" id="appContainer">
+                <div class="col-lg-12 h-100">
+                    <div id="mainPage" class="row h-100 pages">
+                        <div class="col-lg-3">
+                            <div id="mainHeader">
+                                <h1>Froggy Knight</h1>
+                            </div>
+                            <div class="mainControllingPanel">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        Start Place :
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <input type="text" id="txtStartPlace" class="form-control" maxlength="2" value="A1" autocomplete="off">
+                                    </div>
+                                    <div class="col-lg-12 d-flex justify-content-end mt-3">
+                                        <button id="btnPlaceFrog" class="btn btn-success" @click="PlaceFrog()">Place Frog 🐸</button>
+                                    </div>
                                 </div>
-                                <div class="col-lg-12">
-                                    <input type="text" id="txtStartPlace" class="form-control" maxlength="2" value="A1" autocomplete="off">
-                                </div>
-                                <div class="col-lg-12 d-flex justify-content-end mt-3">
-                                    <button id="btnPlaceFrog" class="btn btn-success" @click="PlaceFrog()">Place Frog 🐸</button>
+                            </div>
+                            <div class="mainControllingPanel">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        End Place :
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <input type="text" id="txtEndPlace" class="form-control" maxlength="2" value="B3" autocomplete="off">
+                                    </div>
+                                    <div class="col-lg-12 d-flex justify-content-end mt-3">
+                                        <button id="btnPlaceFrog" class="btn btn-primary" @click="StartTravel()">Start Travel ✈</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="controllingPanel">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    End Place :
-                                </div>
-                                <div class="col-lg-12">
-                                    <input type="text" id="txtEndPlace" class="form-control" maxlength="2" value="B3" autocomplete="off">
-                                </div>
-                                <div class="col-lg-12 d-flex justify-content-end mt-3">
-                                    <button id="btnPlaceFrog" class="btn btn-primary" @click="StartTravel()">Start Travel ✈</button>
-                                </div>
-                            </div>
+                        <div class="col-lg-9">
+                            <div id="mainChessBoard" class="m-5 m-lg-0"></div>
                         </div>
                     </div>
-                    <div class="col-lg-9">
-                        <div id="mainContent" class="m-5 m-lg-0"></div>
+                </div>
+                <div class="col-lg-12 h-100">
+                    <div id="introductionPage" class="row h-100 align-items-center pages">
+                        <div class="col-lg-12">
+                            <div id="introductionTitleContainer" class="w-100 d-flex justify-content-center">
+                                <img id="introductionTitle" src="./assets/images/titlewhite.svg">
+                            </div>
+                            <div id="introductionDescContainer" class="w-100">
+                                <p id="introductionDesc" class="px-lg-5 px-5">There will be a frog that demonstrates how a knight moves from one place to another place. The knight frog will takes the shortest path to the desired destination.</p>
+                                <button class="btn" id="btnJumpToMain" @click="JumpToMainPage()">Let's Jump Into It</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,16 +78,47 @@
         },
         mounted()
         {
-
+            this.ShowIntroductionPage();
             this.LoadBoard();
-            this.LoadFrogPosition(this.frogXStart, this.frogYStart);
         },
         methods: 
         {
+            ShowIntroductionPage()
+            {
+                setTimeout(() => 
+                {
+                    document.querySelector("#introductionTitle").style.transform = "translate(0px, 0px)";
+                }, 100);
+
+                setTimeout(() => 
+                {
+                    document.querySelector("#introductionDesc").style.transform = "translate(0px, 0px)";
+                }, 800);
+
+                setTimeout(() => 
+                {
+                    document.querySelector("#btnJumpToMain").style.opacity = "1";
+                }, 1600);
+            },
+            JumpToMainPage()
+            {
+                const introductionPage = document.querySelector("#introductionPage");
+                introductionPage.style.transform = "translate(0px, 0%)";
+                introductionPage.style.opacity = "0";
+
+                const mainPage = document.querySelector("#mainPage");
+                mainPage.style.transform = "translate(0px, 0%)";
+                mainPage.style.opacity = "1";
+
+                setTimeout(() => 
+                {
+                    this.LoadFrogPosition(this.frogXStart, this.frogYStart);
+                }, 1500);
+            },
             LoadBoard()
             {
-                const mainContent = document.querySelector("#mainContent");
-                mainContent.innerHTML = "";
+                const mainChessBoard = document.querySelector("#mainChessBoard");
+                mainChessBoard.innerHTML = "";
 
                 for(let i = 0; i < 9; i++)
                 {
@@ -116,7 +162,7 @@
                         chessBoardPlateRowContainer.appendChild(chessBoardPlate);
                     }
 
-                    mainContent.appendChild(chessBoardPlateRowContainer);
+                    mainChessBoard.appendChild(chessBoardPlateRowContainer);
                 }
             },
             LoadFrogPosition(x, y)
@@ -1060,6 +1106,10 @@
 
     @import 'assets/css/Bootstrap.css';
 
+    /*           */
+    /* Animation */
+    /*           */
+
     @keyframes waterFlows {
         0%
         {
@@ -1111,14 +1161,58 @@
         }
     }
 
+    /*       */
+    /* Fonts */
+    /*       */
+
+    @font-face {
+        font-family: linotte-light;
+        src: url("./assets/fonts/linotte_light.otf");
+    }
+
+    @font-face {
+        font-family: linotte-regular;
+        src: url("./assets/fonts/linotte_regular.otf");
+    }
+
+
+
+
+
+    /*                  */
+    /* Parent Container */
+    /*                  */
+
     #appContainer
     {
         animation: waterFlows 2s ease-in-out infinite;
         background-repeat: repeat;
         transition: all 1s ease-in-out;
+        overflow: hidden;
     }
 
-    #header
+    .pages
+    {
+        transition: 1.5s all ease-in-out;
+    }
+
+
+
+
+
+
+    /*           */
+    /* Main Page */
+    /*           */
+
+    #mainPage
+    {
+        transform: translate(0, -100%);
+        opacity: 0;
+        overflow: hidden;
+    }
+
+    #mainHeader
     {
         padding-top: 30px;
         padding-left: 30px;
@@ -1126,7 +1220,7 @@
         text-shadow: rgba(0, 0, 0, 0.35) 5px 5px 5px;
     }
 
-    .controllingPanel
+    .mainControllingPanel
     {
         background-color: rgba(255, 255, 255, 0.9);
         margin: 30px 0 0 30px;
@@ -1134,7 +1228,7 @@
         padding: 20px;
     }
 
-    #mainContent
+    #mainChessBoard
     {
         border-radius: 10px;
         padding: 30px;
@@ -1168,6 +1262,72 @@
         animation: lilyPadMoves 4s ease-in-out infinite;
         filter : brightness(100%);
         transition: all 1s ease-in-out;
+    }
+
+
+
+
+
+    /*                   */
+    /* Introduction Page */
+    /*                   */
+
+    #introductionPage
+    {
+        transform: translate(0%, -100%);
+        background-image: linear-gradient(to bottom, #449da5, #146571);
+        opacity: 1;
+    }
+
+    #introductionTitleContainer
+    {
+        overflow: hidden;
+    }
+
+    #introductionTitle
+    {
+        width: 75%;
+        transition: all 1.25s ease-in-out;
+        transform: translate(0, 100%);
+        user-select: none;
+    }
+
+    #introductionDescContainer
+    {
+        margin-top: 24px;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    #introductionDesc
+    {
+        color: rgb(245, 245, 245);
+        font-family: linotte-light;
+        font-size: 24px;
+        transform: translate(0, -100%);
+        transition: all 1.25s ease-in-out;
+    }
+
+    #btnJumpToMain
+    {
+        margin-top: 16px;
+        background-color: #04a74d;
+        border: 1px solid rgb(20, 108, 67);
+        color: white;
+        font-size: 18px;
+        transition: all 0.15s ease-in-out;
+        opacity: 0;
+    }
+
+    #btnJumpToMain:hover
+    {
+        background-color: #00602B;
+    }
+
+    #btnJumpToMain:focus
+    {
+        outline: none;
+        box-shadow: none;
     }
 
 </style>
