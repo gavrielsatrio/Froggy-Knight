@@ -4,7 +4,7 @@
             <div class="row vh-100" id="appContainer">
                 <div class="col-lg-12 h-100">
                     <div id="mainPage" class="row h-100 pages">
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="mainControllingPanel">
                                 <div class="row">
                                     <h2 id="mainControllingPanelHeader">Set Your Frog</h2>
@@ -26,8 +26,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-9">
-                            <div id="mainChessBoard" class="m-5 m-lg-0"></div>
+                        <div class="col-lg-8">
+                            <div id="mainChessBoard"></div>
                         </div>
                     </div>
                 </div>
@@ -126,7 +126,6 @@
                             setTimeout(() => 
                             {
                                 this.LoadBoard();
-                                this.LoadFrogPosition(this.frogXStart, this.frogYStart);
                             }, 1200);
                         }, 600);
                     }, 300);
@@ -235,6 +234,14 @@
 
                                 this.LoadFrogPosition(this.frogXStart, this.frogYStart);
                                 this.Travel(this.frogXStart, this.frogYStart, 0);
+
+                                console.log(this.allMoves);
+
+                                if(this.allMoves.length == 0)
+                                {
+                                    document.querySelector("#chessBoardPlateImage-" + this.frogXStart + "" + this.frogYStart).style.filter = "brightness(100%)";
+                                    return;
+                                }
 
                                 const movesNeeded = [];
                                 const lastMove = this.allMoves[this.allMoves.findIndex(a => a.afterX == this.frogXEnd && a.afterY == this.frogYEnd && a.count == this.minimumMovesCount)];
@@ -1240,6 +1247,12 @@
         font-family: linotte-bold;
     }
 
+    #mainChessBoard
+    {
+        margin-top: 30px;
+        margin-left: 30px;
+    }
+
     .mainControllingPanel
     {
         background-color: rgba(255, 255, 255, 0.9);
@@ -1247,12 +1260,6 @@
         border-radius: 5px;
         padding: 20px;
         box-shadow: -5px 5px 5px rgba(20, 20, 20, 0.15);
-    }
-
-    #mainChessBoard
-    {
-        border-radius: 10px;
-        padding: 30px;
     }
 
     .chessBoardPlates
@@ -1281,7 +1288,7 @@
 
     .chessBoardPlatesImage
     {
-        width: 100%;
+        width: 65px;
         z-index: 1;
         position: absolute;
         animation: lilyPadMoves 4s ease-in-out infinite;
