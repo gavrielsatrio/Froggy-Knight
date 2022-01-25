@@ -1307,7 +1307,10 @@
     #introductionPage
     {
         transform: translate(0%, -100%);
-        background-image: linear-gradient(to bottom, #449da5, #146571);
+        /* background-image: linear-gradient(to bottom, #449da5, #146571); */
+        background-image: url("./assets/images/background-water.svg");
+        background-size: cover;
+        background-repeat: no-repeat;
         opacity: 1;
     }
 
