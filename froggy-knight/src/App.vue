@@ -72,7 +72,7 @@
         {
             this.ShowIntroductionPage();
             // this.JumpToMainPage();
-            this.LoadBoard();
+            // this.LoadBoard();
         },
         methods: 
         {
@@ -111,7 +111,6 @@
                         setTimeout(() => 
                         {
                             frogLoading.style.opacity = "0";
-                            this.LoadFrogPosition(this.frogXStart, this.frogYStart);
                         }, 350);
 
                         setTimeout(() => 
@@ -123,6 +122,12 @@
                             const mainPage = document.querySelector("#mainPage");
                             mainPage.style.transform = "translate(0px, 0%)";
                             mainPage.style.opacity = "1";
+
+                            setTimeout(() => 
+                            {
+                                this.LoadBoard();
+                                this.LoadFrogPosition(this.frogXStart, this.frogYStart);
+                            }, 1200);
                         }, 600);
                     }, 300);
                 }, 1400);
@@ -135,7 +140,7 @@
                 for(let i = 0; i < 9; i++)
                 {
                     const chessBoardPlateRowContainer = document.createElement("div");
-                    chessBoardPlateRowContainer.className = "d-flex justify-content-center";
+                    chessBoardPlateRowContainer.className = "d-flex justify-content-start";
 
                     for(let j = 0; j < 9; j++)
                     {
@@ -170,8 +175,15 @@
                                 chessBoardPlate.appendChild(frog);
                             }
                         }
-
-                        chessBoardPlateRowContainer.appendChild(chessBoardPlate);
+                        
+                        setTimeout(() => 
+                        {
+                            chessBoardPlateRowContainer.appendChild(chessBoardPlate);
+                            setTimeout(() => 
+                            {
+                                chessBoardPlate.style.transform = "scale(100%)";
+                            }, 100);
+                        }, 150 * (j + 1) + (50 * i));
                     }
 
                     mainChessBoard.appendChild(chessBoardPlateRowContainer);
@@ -1115,17 +1127,17 @@
     @keyframes lilyPadMoves {
         0%
         {
-            transform: translateY(0px);
+            transform: translateY(0px) scale(100%);
         }
 
         50%
         {
-            transform: translateY(-4px);
+            transform: translateY(-4px) scale(105%);
         }
 
         100%
         {
-            transform: translateY(0px);
+            transform: translateY(0px) scale(100%);
         }
     }
 
@@ -1254,6 +1266,8 @@
         font-family: linotte-bold;
         font-size: 18px;
         text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
+        transition: all 0.5s ease-in-out;
+        transform: scale(0%);
     }
 
     #frogImage
@@ -1262,6 +1276,7 @@
         position: absolute;
         z-index: 2;
         transition: all 1.5s ease-in-out;
+        scale: 0%;
     }
 
     .chessBoardPlatesImage
