@@ -208,7 +208,12 @@
                 const txtStartPlace = document.querySelector("#txtStartPlace");
                 if(txtStartPlace.value != "" && txtStartPlace.value.length == 2)
                 {
-                    const frogXStartInput = txtStartPlace.value[0].charCodeAt(0) - 64;
+                    let frogXStartInput = txtStartPlace.value[0].charCodeAt(0) - 64;
+                    if(txtStartPlace.value[0].charCodeAt(0) >= 97)
+                    {
+                        frogXStartInput -= 32;
+                    }
+
                     const frogYStartInput = parseInt(txtStartPlace.value[1]);
 
                     if((frogXStartInput >= 1 && frogXStartInput <= 8) && (frogYStartInput >= 1 && frogYStartInput <= 8))
@@ -216,7 +221,11 @@
                         const txtEndPlace = document.querySelector("#txtEndPlace");
                         if(txtEndPlace.value != "" && txtEndPlace.value.length == 2)
                         {
-                            const frogXEndInput = txtEndPlace.value[0].charCodeAt(0) - 64;
+                            let frogXEndInput = txtEndPlace.value[0].charCodeAt(0) - 64;
+                            if(txtEndPlace.value[0].charCodeAt(0) >= 97)
+                            {
+                                frogXEndInput -= 32;
+                            }
                             const frogYEndInput = parseInt(txtEndPlace.value[1]);
 
                             if((frogXEndInput >= 1 && frogXEndInput <= 8) && (frogYEndInput >= 1 && frogYEndInput <= 8))
