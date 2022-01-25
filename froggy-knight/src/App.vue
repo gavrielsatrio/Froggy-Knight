@@ -12,13 +12,13 @@
                                         Start Place :
                                     </div>
                                     <div class="col-lg-12">
-                                        <input type="text" id="txtStartPlace" class="form-control" maxlength="2" value="A1" autocomplete="off">
+                                        <input type="text" id="txtStartPlace" class="form-control text-uppercase" maxlength="2" value="A1" autocomplete="off">
                                     </div>
                                     <div class="col-lg-12 mt-3">
                                         End Place :
                                     </div>
                                     <div class="col-lg-12">
-                                        <input type="text" id="txtEndPlace" class="form-control" maxlength="2" value="B3" autocomplete="off">
+                                        <input type="text" id="txtEndPlace" class="form-control text-uppercase" maxlength="2" value="B3" autocomplete="off" @keyup.enter="StartTravel()">
                                     </div>
                                     <div class="col-lg-12 d-flex justify-content-end mt-3">
                                         <button id="btnPlaceFrog" class="btn btn-primary" @click="StartTravel()">Start Travel ✈</button>
@@ -243,8 +243,6 @@
 
                                 this.LoadFrogPosition(this.frogXStart, this.frogYStart);
                                 this.Travel(this.frogXStart, this.frogYStart, 0);
-
-                                console.log(this.allMoves);
 
                                 if(this.allMoves.length == 0)
                                 {
