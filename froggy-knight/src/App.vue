@@ -52,7 +52,7 @@
 <script>
 
     import chessBoardPlateImageAsset from './assets/images/lilypad2.svg';
-    import frogAsset from './assets/images/frog.png';
+    import frogAsset from './assets/images/frog.svg';
 
     export default {
         name: 'App',
@@ -171,6 +171,7 @@
                                 frog.src = frogAsset;
                                 frog.id = "frogImage";
 
+                                chessBoardPlate.style.zIndex = "2";
                                 chessBoardPlate.appendChild(frog);
                             }
                         }
@@ -1158,17 +1159,17 @@
     @keyframes frogJump {
         0%
         {
-            width: 50%;
+            width: 30px;
         }
 
         50%
         {
-            width: 90%;
+            width: 50px;
         }
 
         100%
         {
-            width: 50%;
+            width: 30px;
         }
     }
 
@@ -1276,6 +1277,7 @@
         margin: 2px;
         user-select: none;
         position: relative;
+        z-index: 1;
         color: white;
         font-family: linotte-bold;
         font-size: 18px;
@@ -1286,9 +1288,9 @@
 
     #frogImage
     {
-        width: 50%;
+        width: 30px;
         position: absolute;
-        z-index: 2;
+        z-index: 3;
         transition: all 1.5s ease-in-out;
         scale: 0%;
     }
@@ -1296,8 +1298,8 @@
     .chessBoardPlatesImage
     {
         width: 65px;
-        z-index: 1;
         position: absolute;
+        z-index: 2;
         animation: lilyPadMoves 4s ease-in-out infinite;
         filter : brightness(100%);
         transition: all 1s ease-in-out;
@@ -1353,7 +1355,7 @@
     #introductionLoadingFrogImage
     {
         position: absolute;
-        z-index: 1;
+        z-index: 5;
         width: 80px;
         height: 80px;
         bottom: 50px;
