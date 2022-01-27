@@ -35,7 +35,7 @@
                     <div id="introductionPage" class="row h-100 align-items-center pages">
                         <div class="col-lg-12">
                             <div id="introductionTitleContainer" class="w-100 d-flex justify-content-center">
-                                <img id="introductionTitle" src="./assets/images/titlewhite.svg">
+                                <img id="introductionTitle" src="./assets/images/titlewhite.png">
                             </div>
                             <div id="introductionDescContainer" class="w-100">
                                 <p id="introductionDesc" class="px-lg-5 px-5">There will be a frog that demonstrates how a knight moves from one place to another place. The knight frog will takes the shortest path to the desired destination.</p>
