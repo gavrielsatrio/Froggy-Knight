@@ -1292,7 +1292,6 @@
         position: absolute;
         z-index: 3;
         transition: all 1.5s ease-in-out;
-        scale: 0%;
     }
 
     .chessBoardPlatesImage
